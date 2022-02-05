@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:45:09 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 14:40:04 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/05 18:40:47 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philosopher
 {
 	int				label;
 	pthread_t		thread;
+	pthread_mutex_t	*global_stop;
 	pthread_mutex_t	*mtx_left;
 	pthread_mutex_t	*mtx_right;
 	t_periods		*time_to;

@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 14:39:30 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/05 19:15:40 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_clock(void *param)
 	t_thclock	*clock_data;
 
 	clock_data = (t_thclock *)param;
-	while (clock_data->time)
+	while (1)
 	{
 		gettimeofday(&(clock_data->current_time), NULL);
 		*(clock_data->time) = clock_data->current_time.tv_usec;
