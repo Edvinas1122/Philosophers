@@ -6,11 +6,34 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 19:29:12 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/05 21:39:43 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	terminate_one(t_philosopher *arr)
+{
+	free(arr->mtx_left);
+	free(arr);
+}
+
+void	terminate_all(t_philosopher **arr, t_thclock *clock_data, int ct)
+{
+	int	i;
+
+	i = 0;
+	free(arr[0]->status);
+	free(arr[0]->time_to);
+	while (i < ct)
+	{
+		terminate_one(arr[i]);
+		i++;
+	}
+	free(clock_data->time);
+	free(clock_data);
+	free(arr);
+}
 
 static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data, int ct)
 {
@@ -35,17 +58,20 @@ int	main(int argc, char **argv)
 {
 	t_philosopher	**arr;
 	t_thclock		*clock_data;
+	pthread_mutex_t	*global_stop;
 	int				num_of_philosophers;
 
 	num_of_philosophers = ft_atoi(argv[1]);
 	if (!valid_unum_check(argv) || argc != 5)
 		return (0);
-	clock_data = start_clock_thread();
-	arr = allocate_philosophers(num_of_philosophers, argv, clock_data->time);
+	global_stop = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(global_stop, NULL);
+	clock_data = start_clock_thread(global_stop);
+	arr = allocate_philosophers(num_of_philosophers, argv, clock_data->time, global_stop);
 	start_philosopher_threads(num_of_philosophers, arr);
 	wait_for_dead(arr, clock_data, num_of_philosophers);
-	sleep(1);
-	printf("free Here\n");
-	sleep(10);
+	usleep(500000); /* has to vary if input times are high, otherwise will make issues */
+	terminate_all(arr, clock_data, num_of_philosophers);
+	printf("Quit");
 	return (0);
 }

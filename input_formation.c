@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:47:02 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 18:41:31 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/05 20:19:35 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ static t_philosopher	**point_right_mtx(t_philosopher **arr, int argc)
 }
 
 /* Allocating pointer array for threads */
-t_philosopher	**allocate_philosophers(int	argc, char **argv, long int *time)
+t_philosopher	**allocate_philosophers(int	argc, char **argv, long int *time, pthread_mutex_t *global_stop)
 {
 	t_philosopher	**arr;
-	pthread_mutex_t	*global_stop;
 	t_periods		*periods;
 	int				i;
 	int				*status;
@@ -74,15 +73,13 @@ t_philosopher	**allocate_philosophers(int	argc, char **argv, long int *time)
 	arr = malloc(sizeof(t_philosopher *) * argc);
 	periods = assign_periods(argv);
 	status = malloc(sizeof(int));
-	global_stop = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(global_stop, NULL);
 	while (i < argc)
 	{
 		arr[i] = malloc(sizeof(t_philosopher));
 		arr[i]->label = i + 1;
 		arr[i]->time_to = periods;
 		arr[i]->status = status;
-		arr[i]->time = time;
+		arr[i]->time = time; /* not needed */
 		arr[i]->mtx_left = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(arr[i]->mtx_left, NULL);
 		arr[i]->global_stop = global_stop;
