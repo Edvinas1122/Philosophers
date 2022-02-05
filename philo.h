@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:45:09 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/04 22:11:04 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/05 14:40:04 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+/* Clock thread data */
+typedef struct s_thclock
+{
+	pthread_t		th_clock;
+	struct timeval	current_time;
+	long int		*time;
+}	t_thclock;
+
 /* Time periods and terms */
 typedef struct s_periods
 {
@@ -27,6 +35,7 @@ typedef struct s_periods
 	int	sleep;
 }	t_periods;
 
+/* Philosopher thread data */
 typedef struct s_philosopher
 {
 	int				label;
@@ -40,7 +49,18 @@ typedef struct s_philosopher
 	
 }	t_philosopher;
 
+/* Main procedures */
 int	main(int argc, char **argv);
+t_thclock	*start_clock_thread(void);
+void	start_philosopher_threads(int ct, t_philosopher	**arr);
+
+/* Input formation */
+int		valid_unum_check(char **argv);
+t_philosopher	**allocate_philosophers(int	argc, char **argv, long int *time);
+
+
+/* Thread function */
+void	*philosopher(void *param);
 
 /* Additional functions */
 int	ft_atoi(const char *str);

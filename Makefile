@@ -6,13 +6,13 @@
 #    By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/01 14:49:54 by emomkus           #+#    #+#              #
-#    Updated: 2022/02/04 18:05:16 by emomkus          ###   ########.fr        #
+#    Updated: 2022/02/05 16:28:21 by emomkus          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAFS = -Wall -Werror -Wextra
-FILES = main.c ft_atoi.c
+CFLAFS = -Wall -Werror -Wextra -fsanitize=address
+FILES = main.c ft_atoi.c thread.c input_formation.c start_threads.c 
 OBJ = $(FILES:.c=.o)
 OUT = philo
 
