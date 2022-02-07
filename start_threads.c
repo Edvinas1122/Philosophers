@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 15:38:07 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 18:47:57 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_clock(void *param)
 	clock_data = (t_thclock *)param;
 	while (1)
 	{
-		usleep(10);
+		usleep(1);
 		pthread_mutex_lock(clock_data->clock_stop);
 		pthread_mutex_unlock(clock_data->clock_stop);
 		gettimeofday(&(clock_data->current_time), NULL);
@@ -52,7 +52,7 @@ void	start_philosopher_threads(int ct, t_philosopher	**arr)
 	{
 		if ((i % 2) == 0)
 		{
-			printf("Thread created: %i\n", i);
+			usleep(100);
 			pthread_create(&arr[i]->thread, NULL, philosopher, (void *)arr[i]);
 		}
 		i++;
@@ -62,7 +62,7 @@ void	start_philosopher_threads(int ct, t_philosopher	**arr)
 	{
 		if ((i % 2) == 1)
 		{
-			printf("Thread created: %i\n", i);
+			usleep(100);
 			pthread_create(&arr[i]->thread, NULL, philosopher, (void *)arr[i]);
 		}
 		i++;

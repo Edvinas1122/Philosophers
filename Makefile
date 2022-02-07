@@ -6,7 +6,7 @@
 #    By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/01 14:49:54 by emomkus           #+#    #+#              #
-#    Updated: 2022/02/05 19:23:07 by emomkus          ###   ########.fr        #
+#    Updated: 2022/02/07 16:47:36 by emomkus          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,6 @@ $(OUT): $(OBJ)
 
 $(OBJ):
 	$(CC) $(CFLAFS)  -c $(FILES)
-
-observe:
-	$(CC) $(CFLAFS)  -c observation.c
-	$(CC) $(CFLAFS) observation.o -lpthread -o test
-	rm observation.o
 
 fclean:
 	rm $(OUT)
