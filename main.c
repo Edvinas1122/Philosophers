@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 14:56:57 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 15:25:27 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,18 @@ static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 		{
 			printf("%ld %i died\n", *arr[0]->time, arr[i]->label);
 			pthread_mutex_lock(arr[0]->global_stop);
+			usleep(500 + (arr[0]->time_to->eat * 1000)
+				+ (arr[0]->time_to->sleep * 1000));
+			pthread_mutex_lock(clock_data->clock_stop);
 			break ;
 		}
 		if (times_to_end <= arr[i]->eat_times && times_to_end != -42)
 		{
 			printf("Finish\n");
 			pthread_mutex_lock(arr[0]->global_stop);
+			usleep(500 + (arr[0]->time_to->eat * 1000)
+				+ (arr[0]->time_to->sleep * 1000));
+			pthread_mutex_lock(clock_data->clock_stop);
 			break ;
 		}
 		i++;
@@ -78,7 +84,7 @@ int	main(int argc, char **argv)
 	num_of_philosophers = ft_atoi(argv[1]);
 	global_stop = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(global_stop, NULL);
-	clock_data = start_clock_thread(global_stop);
+	clock_data = start_clock_thread();
 	arr = allocate_philosophers(num_of_philosophers, argv, clock_data->time,
 			global_stop);
 	start_philosopher_threads(num_of_philosophers, arr);
@@ -87,8 +93,7 @@ int	main(int argc, char **argv)
 	else
 		times_to_end = -42;
 	wait_for_dead(arr, clock_data, num_of_philosophers, times_to_end);
-	usleep(500 + (arr[0]->time_to->eat * 1000)
-		+ (arr[0]->time_to->sleep * 1000));
+	usleep(500);
 	terminate_all(arr, clock_data, num_of_philosophers);
 	printf("Quit\n");
 	return (0);

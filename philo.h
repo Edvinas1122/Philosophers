@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:45:09 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 14:47:07 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 15:25:58 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_thclock
 	pthread_t		th_clock;
 	struct timeval	current_time;
 	long int		*time;
-	pthread_mutex_t	*global_stop;
+	pthread_mutex_t	*clock_stop;
 }	t_thclock;
 
 /* Time periods and terms */
@@ -53,7 +53,7 @@ typedef struct s_philosopher
 
 /* Main procedures */
 int				main(int argc, char **argv);
-t_thclock		*start_clock_thread(pthread_mutex_t *global_stop);
+t_thclock		*start_clock_thread(void);
 void			start_philosopher_threads(int ct, t_philosopher	**arr);
 
 /* Input formation */
