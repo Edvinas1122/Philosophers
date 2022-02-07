@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 15:28:38 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 15:45:48 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ void	terminate_all(t_philosopher **arr, t_thclock *clock_data, int ct)
 	free(arr);
 }
 
+static void	lock_all(t_philosopher **arr, t_thclock *clock_data)
+{
+	pthread_mutex_lock(arr[0]->global_stop);
+	usleep(500 + (arr[0]->time_to->eat * 1000)
+		+ (arr[0]->time_to->sleep * 1000));
+	pthread_mutex_lock(clock_data->clock_stop);
+}
+
 static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 							int ct, int times_to_end)
 {
@@ -50,19 +58,13 @@ static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 		if (*clock_data->time - arr[i]->time_stamp >= arr[0]->time_to->die)
 		{
 			printf("%ld %i died\n", *arr[0]->time, arr[i]->label);
-			pthread_mutex_lock(arr[0]->global_stop);
-			usleep(500 + (arr[0]->time_to->eat * 1000)
-				+ (arr[0]->time_to->sleep * 1000));
-			pthread_mutex_lock(clock_data->clock_stop);
+			lock_all(arr, clock_data);
 			break ;
 		}
 		if (times_to_end <= arr[i]->eat_times && times_to_end != -42)
 		{
 			printf("Finish\n");
-			pthread_mutex_lock(arr[0]->global_stop);
-			usleep(500 + (arr[0]->time_to->eat * 1000)
-				+ (arr[0]->time_to->sleep * 1000));
-			pthread_mutex_lock(clock_data->clock_stop);
+			lock_all(arr, clock_data);
 			break ;
 		}
 		i++;
@@ -93,6 +95,5 @@ int	main(int argc, char **argv)
 	wait_for_dead(arr, clock_data, num_of_philosophers, times_to_end);
 	usleep(500);
 	terminate_all(arr, clock_data, num_of_philosophers);
-	printf("Quit\n");
 	return (0);
 }
