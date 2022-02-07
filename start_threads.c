@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 18:47:57 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 19:02:35 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 void	*ft_clock(void *param)
 {
 	t_thclock	*clock_data;
+	long int	start_of_program;
 
 	clock_data = (t_thclock *)param;
+	gettimeofday(&(clock_data->current_time), NULL);
+	start_of_program = (clock_data->current_time.tv_sec * 1000)
+		+ (clock_data->current_time.tv_usec / 1000);
 	while (1)
 	{
-		usleep(1);
 		pthread_mutex_lock(clock_data->clock_stop);
 		pthread_mutex_unlock(clock_data->clock_stop);
 		gettimeofday(&(clock_data->current_time), NULL);
-		*(clock_data->time) = (clock_data->current_time.tv_sec * 1000)
-			+ (clock_data->current_time.tv_usec / 1000);
+		*(clock_data->time) = ((clock_data->current_time.tv_sec * 1000)
+			+ (clock_data->current_time.tv_usec / 1000)) - start_of_program;
+		usleep(1);
 	}
 	return (NULL);
 }

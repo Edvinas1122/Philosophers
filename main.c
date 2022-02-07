@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 16:45:49 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 19:03:50 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 		}
 		if (times_to_end <= arr[i]->eat_times && times_to_end != -42)
 		{
-			printf("Finish\n");
 			lock_all(arr, clock_data);
 			break ;
 		}
@@ -84,7 +83,6 @@ int	main(int argc, char **argv)
 	global_stop = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(global_stop, NULL);
 	clock_data = start_clock_thread();
-	usleep(500);
 	arr = allocate_philosophers(num_of_philosophers, argv, clock_data->time,
 			global_stop);
 	start_philosopher_threads(num_of_philosophers, arr);
