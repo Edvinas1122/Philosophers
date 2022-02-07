@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 15:26:09 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 15:38:07 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_thclock	*start_clock_thread(void)
 
 	clock_data = malloc(sizeof(t_thclock));
 	clock_data->clock_stop = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(clock_data->clock_stop, NULL);
 	clock_data->time = malloc(sizeof(long int));
 	pthread_create(&clock_data->th_clock, NULL, ft_clock, (void *)clock_data);
 	return (clock_data);

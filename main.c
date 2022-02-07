@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 15:25:27 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 15:28:38 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ void	terminate_all(t_philosopher **arr, t_thclock *clock_data, int ct)
 static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 							int ct, int times_to_end)
 {
-	int			i;
-	suseconds_t	stamp;
+	int	i;
 
 	i = 0;
-	stamp = *clock_data->time;
 	usleep(50);
 	while (1)
 	{
