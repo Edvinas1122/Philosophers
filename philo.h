@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:45:09 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 20:00:05 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/07 14:47:07 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_thclock
 	pthread_t		th_clock;
 	struct timeval	current_time;
 	long int		*time;
-	pthread_mutex_t *global_stop;
+	pthread_mutex_t	*global_stop;
 }	t_thclock;
 
 /* Time periods and terms */
@@ -45,26 +45,26 @@ typedef struct s_philosopher
 	pthread_mutex_t	*mtx_left;
 	pthread_mutex_t	*mtx_right;
 	t_periods		*time_to;
-	long int		*time; /* Not needed */
+	long int		*time;
 	long int		time_stamp;
+	int				eat_times;
 	int				*status;
-	
 }	t_philosopher;
 
 /* Main procedures */
-int	main(int argc, char **argv);
-t_thclock	*start_clock_thread(pthread_mutex_t *global_stop);
-void	start_philosopher_threads(int ct, t_philosopher	**arr);
+int				main(int argc, char **argv);
+t_thclock		*start_clock_thread(pthread_mutex_t *global_stop);
+void			start_philosopher_threads(int ct, t_philosopher	**arr);
 
 /* Input formation */
-int		valid_unum_check(char **argv);
-t_philosopher	**allocate_philosophers(int	argc, char **argv, long int *time, pthread_mutex_t *global_stop);
-
+int				valid_unum_check(char **argv);
+t_philosopher	**allocate_philosophers(int argc, char **argv,
+					long int *time, pthread_mutex_t *global_stop);
 
 /* Thread function */
-void	*philosopher(void *param);
+void			*philosopher(void *param);
 
 /* Additional functions */
-int	ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 
 #endif

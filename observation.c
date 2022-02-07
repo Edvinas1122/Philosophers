@@ -6,10 +6,11 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 10:49:19 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/05 16:37:04 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/06 19:08:43 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include <sys/time.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -18,6 +19,7 @@
 typedef struct s_thread
 {
 	pthread_mutex_t	*mtx;
+	struct timeval	current_time;
 	int				i;
 }	t_thread;
 
@@ -26,13 +28,15 @@ typedef struct s_thread
 void	*runner(void *param)
 {
 	t_thread	*data = (t_thread *)param;
-
+	long int time;
 	// pthread_mutex_lock(data->mtx);
 	while (1)
 	{
+		gettimeofday(&(data->current_time), NULL);
+		time = ((data->current_time.tv_sec * 1000) + (data->current_time.tv_usec / 1000));
 		data->i++;
 		sleep(1);
-		printf("The 1st thread= %i\n", data->i);
+		printf("The 1st thread= %li\n", time);
 	}
 	// pthread_mutex_unlock(data->mtx);
 	// pthread_exit(0);
@@ -62,6 +66,7 @@ int	main(void)
 	tid = malloc(sizeof(pthread_t));
 	data.i = 0;
 	data.mtx = malloc(sizeof(pthread_mutex_t));
+	gettimeofday(&(data.current_time), NULL);
 	pthread_mutex_init(data.mtx, NULL);
 	pthread_create(&tid, NULL, runner, (void *)&data);
 	// pthread_create(&tid2, NULL, runner2, (void *)&data);
