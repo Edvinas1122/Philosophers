@@ -25,12 +25,14 @@ void	terminate_all(t_philosopher **arr, t_thclock *clock_data, int ct)
 	i = 0;
 	free(arr[0]->status);
 	free(arr[0]->time_to);
+	free(arr[0]->global_stop);
 	while (i < ct)
 	{
 		terminate_one(arr[i]);
 		i++;
 	}
 	free(clock_data->time);
+	free(clock_data->clock_stop);
 	free(clock_data);
 	free(arr);
 }

@@ -28,7 +28,7 @@ void	*ft_clock(void *param)
 		gettimeofday(&(clock_data->current_time), NULL);
 		*(clock_data->time) = ((clock_data->current_time.tv_sec * 1000)
 			+ (clock_data->current_time.tv_usec / 1000)) - start_of_program;
-		usleep(1);
+		usleep(15);
 	}
 	return (NULL);
 }

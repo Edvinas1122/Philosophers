@@ -15,9 +15,9 @@
 static void	sleeping(t_philosopher *data)
 {
 	pthread_mutex_lock(data->global_stop);
-	pthread_mutex_unlock(data->global_stop);
 	pthread_mutex_unlock(data->mtx_left);
 	pthread_mutex_unlock(data->mtx_right);
+	pthread_mutex_unlock(data->global_stop);
 	printf("%ld %i is sleeping\n", *data->time, data->label);
 	while (*data->time - data->time_stamp - (data->time_to->eat)
 		<= data->time_to->sleep)
@@ -29,8 +29,8 @@ static void	sleeping(t_philosopher *data)
 static void	eat(t_philosopher *data)
 {
 	pthread_mutex_lock(data->global_stop);
+	data->time_stamp = *data->time;
 	pthread_mutex_unlock(data->global_stop);
-	data->time_stamp = data->time[0];
 	printf("%ld %i is eating\n", *data->time, data->label);
 	data->eat_times++;
 	while (*data->time - data->time_stamp <= data->time_to->eat)
