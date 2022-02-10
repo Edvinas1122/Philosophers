@@ -6,7 +6,7 @@
 /*   By: emomkus <emomkus@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:44:50 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/10 12:29:55 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/10 12:47:15 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static void	wait_for_dead(t_philosopher **arr, t_thclock *clock_data,
 			i = 0;
 		if (*clock_data->time - arr[i]->time_stamp >= arr[0]->time_to->die)
 		{
+			pthread_mutex_lock(arr[0]->global_stop);
 			printf("%ld %i died\n", *arr[0]->time, arr[i]->label);
+			pthread_mutex_unlock(arr[0]->global_stop);
 			break ;
 		}
 		if (times_to_end <= arr[i]->eat_times && times_to_end != -42)

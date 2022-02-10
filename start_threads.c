@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_threads.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: emomkus <emomkus@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/09 18:46:30 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/10 12:52:49 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	*ft_clock(void *param)
 	while (1)
 	{
 		pthread_mutex_lock(clock_data->clock_stop);
-		pthread_mutex_unlock(clock_data->clock_stop);
 		gettimeofday(&(clock_data->current_time), NULL);
 		*(clock_data->time) = ((clock_data->current_time.tv_sec * 1000)
 				+ (clock_data->current_time.tv_usec / 1000)) - start_of_program;
+		pthread_mutex_unlock(clock_data->clock_stop);
 		usleep(15);
 	}
 	return (NULL);
