@@ -14,5 +14,5 @@ lock_all will wait for all threads to jump into global mutex lock, because this 
 So before proceeding to freeing memory it is important that threads, would be locked.
 lock_all then locks clock thread.
 
-Eventualy we proside to terminate_all, which will delocate all allocated memory including mutexes, structs and contents of structs, pointer array.
+Eventualy we proceed to terminate_all, which will delocate all allocated memory including mutexes, structs and contents of structs, pointer array.
 We believe that return does terminate process, clean, and those philosopher thread souls, disapears.
