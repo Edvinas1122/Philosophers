@@ -3,7 +3,7 @@
 A solution loops clock thread, main thread and philosophers threads. Main thread are constantly comparing all thread timestamp and current time aritmetic difference against - time to die.
 Clock thread is updating current time, needed, for threads, for aritmetic logic. 
 
-In main allocate_philosophers() return pointer array of t_philosopher structs.  Structs are used to pass into start_philosopher_threads() where each initiated thread has a proper struct.
+In main allocate_philosophers() returns a pointer array of t_philosopher structs.  Structs are used to pass into start_philosopher_threads() where each initiated thread has a proper struct.
 
 wait_for_dead() checks if any of threads timestamps and current time aritmetic difference is bigger that death time and checks if all philosophers have eaten number of times.
 
