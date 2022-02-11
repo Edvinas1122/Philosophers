@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_formation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: emomkus <emomkus@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:47:02 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 14:56:20 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/11 07:00:59 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,16 @@ t_philosopher	**allocate_philosophers(int argc, char **argv, long int *time,
 	t_philosopher	**arr;
 	t_periods		*periods;
 	int				i;
-	int				*status;
 
 	i = 0;
 	arr = malloc(sizeof(t_philosopher *) * argc);
 	periods = assign_periods(argv);
-	status = malloc(sizeof(int));
 	while (i < argc)
 	{
 		arr[i] = malloc(sizeof(t_philosopher));
 		arr[i]->label = i + 1;
 		arr[i]->eat_times = 0;
 		arr[i]->time_to = periods;
-		arr[i]->status = status;
 		arr[i]->time = time;
 		arr[i]->mtx_left = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(arr[i]->mtx_left, NULL);

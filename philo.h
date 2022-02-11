@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: emomkus <emomkus@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:45:09 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 15:25:58 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/11 07:01:03 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_philosopher
 	long int		*time;
 	long int		time_stamp;
 	int				eat_times;
-	int				*status;
 }	t_philosopher;
 
 /* Main procedures */
@@ -63,6 +62,10 @@ t_philosopher	**allocate_philosophers(int argc, char **argv,
 
 /* Thread function */
 void			*philosopher(void *param);
+
+/* Terminate function */
+void			terminate_all(t_philosopher **arr,
+					t_thclock *clock_data, int ct);
 
 /* Additional functions */
 int				ft_atoi(const char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_threads.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emomkus <emomkus@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: emomkus <emomkus@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 13:58:26 by emomkus           #+#    #+#             */
-/*   Updated: 2022/02/07 19:02:35 by emomkus          ###   ########.fr       */
+/*   Updated: 2022/02/10 12:52:49 by emomkus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	*ft_clock(void *param)
 	while (1)
 	{
 		pthread_mutex_lock(clock_data->clock_stop);
-		pthread_mutex_unlock(clock_data->clock_stop);
 		gettimeofday(&(clock_data->current_time), NULL);
 		*(clock_data->time) = ((clock_data->current_time.tv_sec * 1000)
-			+ (clock_data->current_time.tv_usec / 1000)) - start_of_program;
+				+ (clock_data->current_time.tv_usec / 1000)) - start_of_program;
+		pthread_mutex_unlock(clock_data->clock_stop);
 		usleep(15);
 	}
 	return (NULL);
@@ -46,17 +46,36 @@ t_thclock	*start_clock_thread(void)
 	return (clock_data);
 }
 
+/* Delay between each thread start */
+static int	delay_selector(int ct)
+{
+	if (ct < 3)
+		return (200);
+	else if (ct < 6)
+		return (150);
+	else if (ct < 9)
+		return (90);
+	else if (ct < 20)
+		return (60);
+	else if (ct < 80)
+		return (20);
+	else
+		return (1);
+}
+
 /* Start philosopher threads */
 void	start_philosopher_threads(int ct, t_philosopher	**arr)
 {
 	int	i;
+	int	delay;
 
 	i = 0;
+	delay = delay_selector(ct);
 	while (i < ct)
 	{
 		if ((i % 2) == 0)
 		{
-			usleep(100);
+			usleep(delay);
 			pthread_create(&arr[i]->thread, NULL, philosopher, (void *)arr[i]);
 		}
 		i++;
@@ -66,7 +85,7 @@ void	start_philosopher_threads(int ct, t_philosopher	**arr)
 	{
 		if ((i % 2) == 1)
 		{
-			usleep(100);
+			usleep(delay);
 			pthread_create(&arr[i]->thread, NULL, philosopher, (void *)arr[i]);
 		}
 		i++;
