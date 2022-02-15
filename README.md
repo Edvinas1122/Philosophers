@@ -17,6 +17,7 @@ lock_all then locks clock thread.
 Eventualy we proceed to terminate_all, which will delocate all allocated memory including mutexes, structs and contents of structs, pointer array.
 We believe that return does terminate process, clean, and those philosopher thread souls, disapears.
 
+
 Here a simplified version displaying mutex lock in action
 ![alt text](https://drive.google.com/uc?export=view&id=1v9BvocnlpaMWtbdD679kMtw3AB6mSgbj)
 
