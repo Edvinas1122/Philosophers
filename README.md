@@ -1,6 +1,6 @@
 # Philosophers 42
 
-##Description
+## Description
 
 A solution loops clock thread ⌚️, main thread and philosophers threads 👴. Main thread are constantly comparing all thread timestamp and current time aritmetic difference against - time to die 💀.
 Clock thread ⌚️ is updating current time, needed, for threads 👴, for aritmetic logic. 
@@ -20,7 +20,7 @@ Eventualy we proceed to terminate_all 🏁, which will delocate all allocated me
 We believe that return does terminate process, clean, and those philosopher thread souls ✨, disapears.
 
 
-##Images
+## Images
 
 Here a simplified version displaying mutex lock in action
 ![alt text](https://drive.google.com/uc?export=view&id=1v9BvocnlpaMWtbdD679kMtw3AB6mSgbj)
